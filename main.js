@@ -1,32 +1,47 @@
 // Smooth Scroll
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener('click', function(e) {
-        if (this.getAttribute('href') !== '#') {
+    anchor.addEventListener("click", function (e) {
+        const targetId = this.getAttribute("href");
+
+        if (targetId !== "#") {
             e.preventDefault();
-            const target = document.querySelector(this.getAttribute('href'));
+
+            const target = document.querySelector(targetId);
+
             if (target) {
                 target.scrollIntoView({
-                    behavior: 'smooth'
+                    behavior: "smooth"
                 });
             }
+
+            // Close mobile menu
+            navLinks.classList.remove("active");
         }
     });
 });
 
-// Mobile Menu Toggle
-const menuToggle = document.getElementById('menuToggle');
-const navLinks = document.querySelector('.nav-links');
+// Mobile Menu
+const menuToggle = document.getElementById("menuToggle");
+const navLinks = document.querySelector(".nav-links");
 
-if (menuToggle) {
-    menuToggle.addEventListener('click', () => {
-        navLinks.classList.toggle('active');
-    });
-}
+menuToggle.addEventListener("click", () => {
+    navLinks.classList.toggle("active");
+});
 
-// Simple Resume Download Button (Add this in Contact section if you want)
+// Close menu when clicking outside
+document.addEventListener("click", (e) => {
+    if (
+        !menuToggle.contains(e.target) &&
+        !navLinks.contains(e.target)
+    ) {
+        navLinks.classList.remove("active");
+    }
+});
+
+// Resume Download
 function downloadResume() {
-    const link = document.createElement('a');
-    link.href = 'Samuel-Olaleye-Resume.pdf'; // Put your resume file in the root folder
-    link.download = 'Samuel-Olaleye-Resume.pdf';
+    const link = document.createElement("a");
+    link.href = "Samuel-Olaleye-Resume.pdf";
+    link.download = "Samuel-Olaleye-Resume.pdf";
     link.click();
 }
